@@ -33,27 +33,35 @@ function buildMetadata(sample) {
 function buildCharts(sample) {
 
   // @TODO: Use `d3.json` to fetch the sample data for the plots
-  var url = `/samples/${sample}`;
-  d3.json(url).then(function(data) {
-    console.log(data);
-    // @TODO: Build a Bubble Chart using the sample data
-    var xValues = data.otu_id;
-    var yValues = data.sample_values;
-    var mSize = data.sample_values;
-    var mColors = data.otu_ids;
-    var tValues = data.otu_labels;
+  var labels = sampleData[0]['otu_ids'].map(function(item) {
+    return otuData[item]
+  });
 
-    // Bubble Chart
-    var bubblechart = {
-      x: xvalues,
-      y: yValues,
-      text: tValues,
-      mode: 'markers',
-        marker: {
-          color: mColors,
-          size: mSize,
-        }
+    // Bubble Chart using the sample data
+    // Defining Bubble Chart layout area
+    var bubbleArea = {
+      margin: {t:0},
+      hovermode: 'closest',
+      xaxis: {title: 'OTU IDs'}
     };
+    // Defining Bubble Chart dataset using OTU
+    var bubbleData = [{
+      x: sampleData[0]['otu_ids'],
+      y: sampleData[0]['sample_values'],
+      text: otu_labels,
+      mode: 'markers',
+      marker: {
+        size: sampleData[0]['sample_values'],
+        color: sampleData[0]['otd_ids'],
+        colorscale: "Earth"
+      }
+    }];
+    // Placing Bubble Chart in index.html file where bubble is specified
+    var bubbleChart = document.getElementById('bubble');
+    plotly.plot(bubbleChart, bubbleData, bubbleArea);
+
+
+
 
     // @TODO: Build a Pie Chart
     // HINT: You will need to use slice() to grab the top 10 sample_values,

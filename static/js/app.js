@@ -9,9 +9,10 @@ function buildMetadata(sample) {
 
   // @TODO: Complete the following function that builds the metadata panel
   // Use `d3.json` to fetch the metadata for a sample
-  var sample_metadata = document.getElementById("sample-metadata");
-  //  console.log(sample);
-    // Use d3 to select the panel with id of `#sample-metadata`
+  var url = `/metadata/${sample}`;
+  d3.json(url).then(function(sample) {
+    //  console.log(sample);
+    //Use d3 to select the panel with id of `#sample_metadata`
     var sample_metadata = d3.select("#sample-metadata");
     // Use `.html("") to clear any existing metadata
     sample_metadata.html("");
@@ -27,11 +28,9 @@ function buildMetadata(sample) {
 
 function buildCharts(sample) {
 
-  // @TODO: Use `d3.json` to fetch the sample data for the plots
-  var labels = sampleData[0]['otu_ids'].map(function(item) {
-    return otuData[item]
-  });
-
+  // Use `d3.json` to fetch the sample data for the plots
+  var url = `/samples/${sample}`;
+  d3.json(url).then(function(data) {
     // Bubble Chart using the sample data
     // Defining Bubble Chart layout area
     var bubbleArea = {
@@ -48,7 +47,6 @@ function buildCharts(sample) {
       marker: {
         size: sampleData[0]['sample_values'],
         color: sampleData[0]['otd_ids'],
-        colorscale: "Earth"
       }
     }];
     // Placing Bubble Chart in index.html file where bubble is specified

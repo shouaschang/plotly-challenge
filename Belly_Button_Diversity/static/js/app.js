@@ -30,12 +30,60 @@ function buildMetadata(sample) {
 function buildCharts(sample) {
 
   // @TODO: Use `d3.json` to fetch the sample data for the plots
-  var url = 
+  var url = `/sample/${sample}`;
+  d3.json(url).then(function(data) {
     // @TODO: Build a Bubble Chart using the sample data
+    // Helpful Resource Reference: https://plot.ly/python/bubble-charts/
+    // Getting sample data
+    var xValues = data.otu_ids;
+    var yValues = data.sample_values;
+    var tValues = data.otu_labels;
+    var mSize = data.sample_values;
+    var mColor = data.otu_ids;
+
+    // Bubble look and feel
+    var bubbleTrace = {
+      x: xValues,
+      y: yValues,
+      text: tValues,
+      mode: 'markers',
+      marker: {
+        color: mColors,
+        size: mSize
+      }
+    };
+
+    var bubbleData = [bubbleTrace];
+
+    var bubbleLayout = {
+      xaxis: {
+        title: 'Operational Taxonomic Unit (OTU) IDs',
+      };
+    }
+
+    Plotly.newPlot('bubble', bubbleData, bubblyLayout);
+
 
     // @TODO: Build a Pie Chart
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
+    // Helpful Resource Reference: https://plot.ly/python/pie-charts/
+    d3.json(url).then(function(data) {
+      var pieSample = data.sample_values.slice(0,10);
+      var pieLabels = data.otu_ids.slice(0,10);
+      var pieHover = data.otu_labels.slice(0,10);
+
+      var pieData = [{
+        type: 'pie',
+        labels: pieLabels,
+        values: pieSample,
+        hovertext: pieHover
+      }];
+
+      Plotly.newPlot('pie', pieData);
+
+    });
+});
 }
 
 function init() {

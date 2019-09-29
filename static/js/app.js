@@ -58,8 +58,8 @@ function buildCharts(sample) {
         title: 'Operational Taxonomic Unit (OTU) IDs',
       };
     }
-
-    Plotly.newPlot('bubble', bubbleData, bubblyLayout);
+    var bubble = document.getElementById('bubble');
+    Plotly.Plot(bubble, bubbleData, bubbleLayout);
 
 
     // @TODO: Build a Pie Chart
@@ -77,11 +77,16 @@ function buildCharts(sample) {
         hovertext: pieHover
       }];
 
-      Plotly.newPlot('pie', pieData);
+      var pieLayout = {
+        margin: {
+          t: 0,
+          l: 0
+        }
+      };
+      var pie = document.getElementById('pie');
+      Plotly.Plot(pie, pieData);
 
-    });
-});
-}
+    };
 
 function init() {
   // Grab a reference to the dropdown select element

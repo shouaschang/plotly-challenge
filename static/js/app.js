@@ -9,8 +9,7 @@ function buildMetadata(sample) {
 
   // @TODO: Complete the following function that builds the metadata panel
   // Use `d3.json` to fetch the metadata for a sample
-  var url = `/metadata/${sample}`;
-  d3.json(url).then(function(sample) {
+  var sample_metadata = document.getElementById("sample-metadata");
   //  console.log(sample);
     // Use d3 to select the panel with id of `#sample-metadata`
     var sample_metadata = d3.select("#sample-metadata");
@@ -25,9 +24,6 @@ function buildMetadata(sample) {
     });
   }
 )};
-
-// BONUS: Build the Gauge Chart
-// buildGauge(data.WFREQ);
 
 function buildCharts(sample) {
 
@@ -59,17 +55,13 @@ function buildCharts(sample) {
     var bubbleChart = document.getElementById('bubble');
     plotly.plot(bubbleChart, bubbleData, bubbleArea);
 
-
-
-
-    // @TODO: Build a Pie Chart
+    // Pie Chart
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
     d3.json(url).then(function(data) {
       var pieValues = data.sample_values.slice(0,10);
       var pieLabels = data.otu_ids.slice(0,10);
       var pieHover = data.otu_labels.slice(0,10);
-
 }
 
 function init() {

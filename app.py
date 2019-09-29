@@ -27,9 +27,9 @@ app = Flask(__name__)
 #################################################
 
 #app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
-db = SQLAlchemy(app)
+#db = SQLAlchemy(app)
 
-engine = create_engine("sqlite:///db/bellybutton.sqlite", echo=False)
+engine = create_engine("sqlite:///db/belly_button_biodiversity.sqlite")
 
 Base = automap_base()
 Base.prepare(engine, reflect=True)

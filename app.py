@@ -27,7 +27,7 @@ app = Flask(__name__)
 #################################################
 
 #app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
-#db = SQLAlchemy(app)
+db = SQLAlchemy(app)
 
 engine = create_engine("sqlite:///db/belly_button_biodiversity.sqlite", echo=False)
 
@@ -44,10 +44,10 @@ def index():
     """Return the homepage."""
     return render_template("index.html")
 
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+#@app.route('/favicon.ico')
+#def favicon():
+#    return send_from_directory(os.path.join(app.root_path, 'static'),
+            #                   'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 @app.route("/names")
 def names():

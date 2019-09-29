@@ -22,8 +22,6 @@ function buildMetadata(sample) {
     Object.entries(sample).forEach(function([key, value]) {
       var row = panel.append("p").text(`${key}: ${value}`);
   });
-    // BONUS: Build the Gauge Chart
-    // buildGauge(data.WFREQ);
   }
 )};
 

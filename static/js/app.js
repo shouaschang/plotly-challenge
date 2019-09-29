@@ -19,12 +19,13 @@ function buildMetadata(sample) {
     // Use `Object.entries` to add each key and value pair to the panel
     // Hint: Inside the loop, you will need to use d3 to append new
     // tags for each key-value in the metadata.
-    Object.entries(sample).forEach(([key, value]) => {
+    Object.entries(sample).forEach(function([key, value]) {
       var row = panel.append("p").text(`${key}: ${value}`);
   });
     // BONUS: Build the Gauge Chart
     // buildGauge(data.WFREQ);
   }
+)};
 
 
 function buildCharts(sample) {

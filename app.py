@@ -25,19 +25,9 @@ app = Flask(__name__)
 #################################################
 # Database Setup
 #################################################
-#engine = create_engine("sqlite:///DataSets/belly_button_biodiversity.sqlite")
+
 #app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
 #db = SQLAlchemy(app)
-
-# reflect an existing database into a new model
-#Base = automap_base()
-# reflect the tables
-#Base.prepare(db.engine, reflect=True)
-
-# Save references to each table
-#OTU = Base.classes.otu
-#Samples_Metadata = Base.classes.samples_metadata
-#Samples = Base.classes.samples
 
 engine = create_engine("sqlite:///db/belly_button_biodiversity.sqlite", echo=False)
 
@@ -46,7 +36,6 @@ Base.prepare(engine, reflect=True)
 Sample = Base.classes.samples
 OTU = Base.classes.otu
 Metadata = Base.classes.samples_metadata
-
 
 session = Session(engine)
 

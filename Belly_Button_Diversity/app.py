@@ -25,12 +25,9 @@ app = Flask(__name__)
 #################################################
 # Database Setup
 #################################################
-#engine = create_engine("sqlite:///DataSets/belly_button_biodiversity.sqlite")
-#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or "sqlite:///db/bellybutton.sqlite"
+engine = create_engine("sqlite:///DataSets/belly_button_biodiversity.sqlite")
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
-# app.config["SQLALCHEMY_DATABASE_URI"] = "belly_button_biodiversity.sqlite"
 db = SQLAlchemy(app)
-
 
 # reflect an existing database into a new model
 Base = automap_base()
@@ -39,11 +36,8 @@ Base.prepare(db.engine, reflect=True)
 
 # Save references to each table
 OTU = Base.classes.otu
-Samples = Base.classes.samples
 Samples_Metadata = Base.classes.samples_metadata
-
-# Session
-#session = Session(engine)
+Samples = Base.classes.samples
 
 @app.route("/")
 def index():
@@ -70,6 +64,7 @@ def otu():
     # Use numpy ravel to extract list of tuples into a list of OTU descriptions
     otu_list = list(np.ravel(results))
     return jsonify(otu_list)
+
 
 @app.route("/metadata/<sample>")
 def sample_metadata(sample):
@@ -115,13 +110,13 @@ def samples(sample):
     sample_data.sort_values(by=sample, ascending=False, inplace=True)
 
     # Format the data to send as json
-    data = {
+    data = [{
         "otu_ids": sample_data.otu_id.values.tolist(),
         "sample_values": sample_data[sample].values.tolist(),
         "otu_labels": sample_data.otu_label.tolist(),
-    }
+    }]
     return jsonify(data)
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

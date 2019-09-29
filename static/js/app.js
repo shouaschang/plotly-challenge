@@ -39,7 +39,7 @@ function buildCharts(sample) {
     var mSize = data.sample_values;
     var mColor = data.otu_ids;
 
-    // Bubble look and feel
+    // Bubble data
     var bubbleData = {
       x: xValues,
       y: yValues,
@@ -51,13 +51,16 @@ function buildCharts(sample) {
       }
     };
 
+    // Bubble layout
     var bubbleLayout = {
       xaxis: {
         title: 'Operational Taxonomic Unit (OTU) IDs',
       };
     }
-    var BUBBLE = document.getElementById('bubble');
-    Plotly.newPlot(BUBBLE, bubbleData, bubbleLayout);
+
+    // Rendering Bubble chart using Plotly
+    var bubble = document.getElementById('bubble');
+    Plotly.newPlot(bubble, bubbleData, bubbleLayout);
 
 
     // @TODO: Build a Pie Chart
@@ -68,6 +71,7 @@ function buildCharts(sample) {
       var pieLabels = data.otu_ids.slice(0,10);
       var pieHover = data.otu_labels.slice(0,10);
 
+      // Pie data
       var pieData = [{
         type: 'pie',
         labels: pieLabels,
@@ -75,13 +79,16 @@ function buildCharts(sample) {
         hovertext: pieHover
       }];
 
+      // Pie layout
       var pieLayout = {
         margin: {
           t: 0,
           l: 0
         }
       };
-      var PIE = document.getElementById('pie');
+
+      // Rendering Pie chart using Plotly
+      var pie = document.getElementById('pie');
       Plotly.Plot(pie, pieData, pieLayout);
     };
 

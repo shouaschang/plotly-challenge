@@ -1,3 +1,4 @@
+# Import required dependencies
 import os
 
 import pandas as pd
@@ -9,21 +10,31 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func, desc, select
 
 # Flask
-from flask import Flask, jsonify, render_template, request, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
+from flask import (
+    Flask,
+    jsonify,
+    render_template,
+    request,
+    flash,
+    redirect)
 
+
+#################################################
+# Flask Setup
+#################################################
 app = Flask(__name__)
-
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
 
 #################################################
 # Database Setup
 #################################################
+db = SQLAlchemy(app)
 engine = create_engine("sqlite:///db/belly_button_biodiversity.sqlite")
-# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
-# db = SQLAlchemy(app)
 
 # reflect an existing database into a new model
 Base = automap_base()
+
 # reflect the tables
 Base.prepare(db.engine, reflect=True)
 

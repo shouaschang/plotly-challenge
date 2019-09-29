@@ -81,39 +81,11 @@ function buildCharts(sample) {
           l: 0
         }
       };
-      var PIE = document.getElementById("#pie");
+      var PIE = document.getElementById('pie');
       Plotly.Plot(pie, pieData, pieLayout);
     };
 
-// TESTING UPDATE CODE //
-    function updateCharts(sampleData, otuData) {
-        var sampleValues = sampleData[0]['sample_values'];
-        var otuIDs = sampleData[0]['otu_ids'];
-        // Return the OTU Description for each otuID in the dataset
-        var labels = otuIDs.map(function(item) {
-            return otuData[item]
-        });
-        // Update the Bubble Chart with the new data
-        var BUBBLE = document.getElementById('bubble');
-        Plotly.restyle(BUBBLE, 'x', [otuIDs]);
-        Plotly.restyle(BUBBLE, 'y', [sampleValues]);
-        Plotly.restyle(BUBBLE, 'text', [labels]);
-        Plotly.restyle(BUBBLE, 'marker.size', [sampleValues]);
-        Plotly.restyle(BUBBLE, 'marker.color', [otuIDs]);
-        // Update the Pie Chart with the new data
-        // Use slice to select only the top 10 OTUs for the pie chart
-        var PIE = document.getElementById('pie');
-        var pieUpdate = {
-            values: [sampleValues.slice(0, 10)],
-            labels: [otuIDs.slice(0, 10)],
-            hovertext: [labels.slice(0, 10)],
-            hoverinfo: 'hovertext',
-            type: 'pie'
-        };
-        Plotly.restyle(PIE, pieUpdate);
-}
 
-// END TESTING
 function init() {
   // Grab a reference to the dropdown select element
   var selector = d3.select("#selDataset");

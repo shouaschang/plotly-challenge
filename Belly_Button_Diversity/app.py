@@ -25,11 +25,12 @@ app = Flask(__name__)
 #################################################
 # Database Setup
 #################################################
-engine = create_engine("sqlite:///DataSets/belly_button_biodiversity.sqlite")
+#engine = create_engine("sqlite:///DataSets/belly_button_biodiversity.sqlite")
 #app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or "sqlite:///db/bellybutton.sqlite"
-# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
 # app.config["SQLALCHEMY_DATABASE_URI"] = "belly_button_biodiversity.sqlite"
 db = SQLAlchemy(app)
+
 
 # reflect an existing database into a new model
 Base = automap_base()
@@ -37,9 +38,12 @@ Base = automap_base()
 Base.prepare(db.engine, reflect=True)
 
 # Save references to each table
-Samples_Metadata = Base.classes.samples_metadata
+OTU = Base.classes.otu
 Samples = Base.classes.samples
+Samples_Metadata = Base.classes.samples_metadata
 
+# Session
+session = Session(engine)
 
 @app.route("/")
 def index():
@@ -58,6 +62,14 @@ def names():
     # Return a list of the column names (sample names)
     return jsonify(list(df.columns)[2:])
 
+@app.route('/otu')
+def otu():
+    """Return a list of OTU descriptions."""
+    results = session.query(OTU.lowest_taxonomic_unit_found).all()
+
+    # Use numpy ravel to extract list of tuples into a list of OTU descriptions
+    otu_list = list(np.ravel(results))
+    return jsonify(otu_list)
 
 @app.route("/metadata/<sample>")
 def sample_metadata(sample):

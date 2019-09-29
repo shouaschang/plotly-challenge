@@ -33,7 +33,6 @@ function buildCharts(sample) {
   var url = `/sample/${sample}`;
   d3.json(url).then(function(data) {
     // @TODO: Build a Bubble Chart using the sample data
-    // Helpful Resource Reference: https://plot.ly/python/bubble-charts/
     // Getting sample data
     var xValues = data.otu_ids;
     var yValues = data.sample_values;
@@ -67,7 +66,6 @@ function buildCharts(sample) {
     // @TODO: Build a Pie Chart
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
-    // Helpful Resource Reference: https://plot.ly/python/pie-charts/
     d3.json(url).then(function(data) {
       var pieSample = data.sample_values.slice(0,10);
       var pieLabels = data.otu_ids.slice(0,10);

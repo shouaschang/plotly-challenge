@@ -19,33 +19,26 @@ from flask import (
     flash,
     redirect)
 
-
-#################################################
-# Flask Setup
-#################################################
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
+
 
 #################################################
 # Database Setup
 #################################################
+
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
 db = SQLAlchemy(app)
-engine = create_engine("sqlite:///db/belly_button_biodiversity.sqlite")
 
 # reflect an existing database into a new model
 Base = automap_base()
-
 # reflect the tables
 Base.prepare(db.engine, reflect=True)
 
 # Save references to each table
 Samples_Metadata = Base.classes.sample_metadata
 Samples = Base.classes.samples
-OTU = Base.classes.otu
 
-session = Session(engine)
 
-# Renders index.html template
 @app.route("/")
 def index():
     """Return the homepage."""
@@ -117,4 +110,4 @@ def samples(sample):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

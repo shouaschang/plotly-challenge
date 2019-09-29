@@ -43,7 +43,7 @@ Samples = Base.classes.samples
 Samples_Metadata = Base.classes.samples_metadata
 
 # Session
-session = Session(engine)
+#session = Session(engine)
 
 @app.route("/")
 def index():
